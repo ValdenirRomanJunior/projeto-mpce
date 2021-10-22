@@ -3,6 +3,10 @@ package br.com.mpce.sistemadeprotocolo.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import br.com.mpce.sistemadeprotocolo.entities.Documento;
 
 public class DocumentoDTO implements Serializable {
@@ -13,6 +17,9 @@ public class DocumentoDTO implements Serializable {
 	private Integer codigo;
 	private Integer ano;
 	private LocalDate date;
+	
+	@NotEmpty(message="Campo obrigatório")
+	@Length(min=5, max=80, message="o tamanho deve ser entre 5 e 80 caracteres")
 	private String origem;
 	private String assunto;
 	private String solicitante;

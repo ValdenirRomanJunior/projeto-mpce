@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import br.com.mpce.sistemadeprotocolo.dto.DocumentoDTO;
 import br.com.mpce.sistemadeprotocolo.entities.Documento;
 import br.com.mpce.sistemadeprotocolo.repositories.DocumentoRepository;
@@ -22,13 +21,13 @@ public class DocumentoService {
 	private DocumentoRepository repository;
 	
 	
-	public Page<DocumentoDTO> findAll(Pageable pageable){	
+		public Page<DocumentoDTO> findAll(Pageable pageable){	
 		Page<Documento> result =repository.findAll(pageable);	
 		return result.map(x -> new DocumentoDTO(x));
 		
 	}
 	
-		public Documento insert (Documento obj) {
+			public Documento insert (Documento obj) {
 			obj.setCodigo(geraCodigo()+1);		
 	    	return repository.save(obj);
 	}
@@ -54,8 +53,30 @@ public class DocumentoService {
 				
 			}
 
-	public Documento fromDTO(DocumentoDTO entity) {
-	return  new Documento(entity.getId(),entity.getCodigo(),entity.getAno(),entity.getDate()
-			,entity.getAssunto(),entity.getOrigem(),entity.getSolicitante());
-}
-}
+		
+
+			public void deleteById(Integer id) {		
+				repository.deleteById(id);
+				
+				}
+			
+			public Documento update (Documento obj) {
+				Documento novoDocumento=find(obj.getId());
+				updateData(novoDocumento, obj);
+				return repository.save(novoDocumento);
+				
+			}
+
+			private void updateData(Documento novoDocumento, Documento obj) {
+				novoDocumento.setOrigem(obj.getOrigem());
+				novoDocumento.setAssunto(obj.getAssunto());
+				novoDocumento.setSolicitante(obj.getSolicitante());
+				
+			}
+
+			public Documento fromDTO(DocumentoDTO objDTO) {			
+				return new Documento(objDTO.getId(),objDTO.getCodigo(),objDTO.getAno(), objDTO.getDate(),
+						objDTO.getOrigem(),objDTO.getAssunto(), objDTO.getSolicitante());
+			}
+		
+		}

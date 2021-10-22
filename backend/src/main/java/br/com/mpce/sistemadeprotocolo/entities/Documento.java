@@ -47,6 +47,8 @@ public class Documento {
 		this.assunto = assunto;
 		this.solicitante = solicitante;
 	}
+	
+	
 
 
 	public Integer getId() {
