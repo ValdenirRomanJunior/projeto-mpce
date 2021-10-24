@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class UsuarioController {
 	private UsuarioService service;
 	
 	@GetMapping(value="/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<?> findById(@PathVariable Integer id){
 		Usuario usuario= service.find(id);
 		return ResponseEntity.ok().body(usuario);
@@ -36,6 +38,7 @@ public class UsuarioController {
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Void> insert ( @RequestBody UsuarioDTO obj){
 			Usuario usuario=service.fromDTO(obj);
 			service.insert(usuario);	
