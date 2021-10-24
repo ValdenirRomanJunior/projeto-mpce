@@ -4,11 +4,17 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,25 +28,28 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@Column(unique=true)
 	private String email;
 	@JsonIgnore
 	private String senha;
 	
+	
 
-	@ElementCollection
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
 	private Set<Integer> perfis= new HashSet<>();
 	
 	
 	public Usuario() {
-		addPerfil(Perfil.ADMIN);
+		
 	}
-
+	
 	public Usuario(Integer id, String email, String senha) {
 		super();
 		this.id = id;
 		this.email = email;
-		this.senha = senha;
-		addPerfil(Perfil.ADMIN);
+		this.senha =senha;
+		
 	}
 
 	public Integer getId() {

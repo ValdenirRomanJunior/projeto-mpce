@@ -16,7 +16,7 @@ public class DocumentoDTO implements Serializable {
 	
 	private Integer codigo;
 	private Integer ano;
-	private LocalDate date;
+	private LocalDate data;
 	
 	@NotEmpty(message="Campo obrigatório")
 	@Length(min=5, max=80, message="o tamanho deve ser entre 5 e 80 caracteres")
@@ -35,7 +35,7 @@ public class DocumentoDTO implements Serializable {
 		this.id=entity.getId();
 		this.codigo=entity.getCodigo();
 		this.ano=entity.getAno();
-		this.date=entity.getDate();
+		this.data=entity.getDate();
 		this.origem=entity.getOrigem();
 		this.assunto=entity.getAssunto();
 		this.solicitante=entity.getSolicitante();
@@ -50,7 +50,7 @@ public class DocumentoDTO implements Serializable {
 		this.id = id;
 		this.codigo = codigo;
 		this.ano = ano;
-		this.date = date;
+		this.data = date;
 		this.origem = origem;
 		this.assunto = assunto;
 		this.solicitante = solicitante;
@@ -102,14 +102,14 @@ public class DocumentoDTO implements Serializable {
 
 
 	public LocalDate getDate() {
-		return date;
+		return data;
 	}
 
 
 
 
 	public void setDate(LocalDate date) {
-		this.date = date;
+		this.data = date;
 	}
 
 

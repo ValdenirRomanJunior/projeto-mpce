@@ -30,14 +30,14 @@ public class DocumentoController {
 	@Autowired
 	private DocumentoService service;
 
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	
 	@GetMapping
 	public ResponseEntity<Page<DocumentoDTO>> findAll(Pageable pageable){
 		Page<DocumentoDTO> lista= service.findAll(pageable);
 		return ResponseEntity.ok(lista);
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	
 	@PostMapping
 	public ResponseEntity<Void> insert (@Valid @RequestBody DocumentoDTO obj){	
 			Documento documento= service.fromDTO(obj);
@@ -47,20 +47,20 @@ public class DocumentoController {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
+
 	@GetMapping(value="{id}")
 	public ResponseEntity<Documento> findById(@PathVariable Integer id){	
 			Documento obj=service.find(id);
 			return ResponseEntity.ok().body(obj);
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	
 	@DeleteMapping(value= "/{id}")
 	public ResponseEntity<?> deleteById(@PathVariable Integer id){
 			service.deleteById(id);
 			return ResponseEntity.noContent().build();
 	}
-	@PreAuthorize("hasAnyRole('ADMIN')")
+
 	@PutMapping(value="/{id}")
 	public ResponseEntity<Void> update (@Valid @RequestBody DocumentoDTO objDTO, @PathVariable Integer id){
 		Documento obj = service.fromDTO(objDTO);

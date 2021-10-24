@@ -11,19 +11,19 @@ import br.com.mpce.sistemadeprotocolo.repositories.UsuarioRepository;
 import br.com.mpce.sistemadeprotocolo.security.UserSS;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService{
+
 	
 	@Autowired
-	private UsuarioRepository repository;
-	
+	private UsuarioRepository UsuarioRepository;
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Usuario usuario1 = repository.findByEmail(email);
-		if(usuario1==null) {
-			throw new UsernameNotFoundException(email);
-		}
-			
-		return new UserSS(usuario1.getId(),usuario1.getEmail(),usuario1.getSenha(),usuario1.getPerfis());
+		Usuario usuario= UsuarioRepository.findByEmail(email);
+			if(usuario==null) {
+				throw new UsernameNotFoundException(email);
+			}
+		
+		return new UserSS(usuario.getId(),usuario.getEmail(),usuario.getSenha(),usuario.getPerfis());
 	}
 
 }

@@ -11,7 +11,7 @@ import br.com.mpce.sistemadeprotocolo.entities.Usuario;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 	
-		
+		@Transactional
 		Usuario findByEmail(String email);
 
 }

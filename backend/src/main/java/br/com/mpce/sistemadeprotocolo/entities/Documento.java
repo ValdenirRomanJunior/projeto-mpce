@@ -26,7 +26,7 @@ public class Documento {
 	@Column
 	private Integer codigo;
 	private Integer ano= LocalDate.now().getYear();
-	private LocalDate date;
+	private LocalDate data;
 	private String origem;
 	private String assunto;
 	private String solicitante;
@@ -42,7 +42,7 @@ public class Documento {
 		this.id = id;
 		this.codigo = codigo;
 		this.ano = ano;
-		this.date = date;
+		this.data = date;
 		this.origem = origem;
 		this.assunto = assunto;
 		this.solicitante = solicitante;
@@ -82,12 +82,12 @@ public class Documento {
 
 
 	public LocalDate getDate() {
-		return date;
+		return data;
 	}
 
 
 	public void setDate(LocalDate date) {
-		this.date = date;
+		this.data = date;
 	}
 
 
@@ -128,7 +128,7 @@ public class Documento {
 		result = prime * result + ((ano == null) ? 0 : ano.hashCode());
 		result = prime * result + ((assunto == null) ? 0 : assunto.hashCode());
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((origem == null) ? 0 : origem.hashCode());
 		result = prime * result + ((solicitante == null) ? 0 : solicitante.hashCode());
@@ -160,10 +160,10 @@ public class Documento {
 				return false;
 		} else if (!codigo.equals(other.codigo))
 			return false;
-		if (date == null) {
-			if (other.date != null)
+		if (data == null) {
+			if (other.data != null)
 				return false;
-		} else if (!date.equals(other.date))
+		} else if (!data.equals(other.data))
 			return false;
 		if (id == null) {
 			if (other.id != null)

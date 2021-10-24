@@ -22,34 +22,32 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter{
 	public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil, UserDetailsService userDetailsService) {
 		super(authenticationManager);
 		this.jwtUtil=jwtUtil;
-		this.userDetailsService=userDetailsService;	
+		this.userDetailsService=userDetailsService;
 		
 	}
 	
-	protected void doFilterInternal(HttpServletRequest req,
-									HttpServletResponse resp,
-									FilterChain chain)throws IOException, ServletException{
-		
-		String header=req.getHeader("Authorization");
-		
-		if(header!=null && header.startsWith("Bearer ")) {
-			UsernamePasswordAuthenticationToken auth= getAuthentication(req,header.substring(7));
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+	
+			String header= request.getHeader("Authorization");
 			
-			if(auth !=null) {
-				SecurityContextHolder.getContext().setAuthentication(auth);
-			}
-		}
-		chain.doFilter(req, resp);
+				if(header != null && header.startsWith("Bearer ")) {
+					UsernamePasswordAuthenticationToken auth= getAuthentication(request,header.substring(7));
+					if(auth!=null) {
+						SecurityContextHolder.getContext().setAuthentication(auth);
+					}
+				}
+		chain.doFilter(request, response);
 	}
 
-	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest req, String token) {
-		// TODO Auto-generated method stub
+	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request, String token) {
 		if(jwtUtil.tokenValido(token)) {
-			String username= jwtUtil.getusername(token);
-			UserDetails user= userDetailsService.loadUserByUsername(username);
-			return new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
+			String username =jwtUtil.getUsername(token);
+			UserDetails user = userDetailsService.loadUserByUsername(username);
+			return new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
 		}
 		return null;
 	}
-
+	
 }
